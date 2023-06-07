@@ -84,9 +84,91 @@
       </div>
       <div class="col-12">
         <form [formGroup]="contenitoreForm">
-            <div formGroupName="eroeInfo">
-
+          <div formGroupName="eroeInfo" >
+            <div  class="form-group my-3">
+                <label class="w-100">
+                  Nome eroe
+                  <input type="text" formControlName="name" class="w-100"
+                  id="name" ngModel/>
+                </label>
+                <span *ngIf="getFormC('eroeInfo.name')?.invalid && getFormC('eroeInfo.name')?.touched">
+                  <ng-container *ngIf="getErrorsC('eroeInfo.name', 'required')">
+                    campo obbligatorio
+                  </ng-container>
+                </span>
             </div>
+
+            <div  class="form-group my-3">
+              <label class="w-100">
+                alter ego eroe
+                <input type="text" formControlName="alterEgo" class="w-100"
+                id="alterEgo" ngModel/>
+              </label>
+              <span *ngIf="getFormC('eroeInfo.alterEgo')?.invalid && getFormC('eroeInfo.alterEgo')?.touched">
+                <ng-container *ngIf="getErrorsC('eroeInfo.name', 'required')">
+                  campo obbligatorio
+                </ng-container>
+              </span>
+          </div>
+
+          <div  class="form-group my-3">
+            <label class="w-50">
+              potere eroe
+              <select  formControlName="power" class="w-50"
+              id="power" ngModel>
+                <option *ngFor="let power of powers" [value]="power.label"
+                value = "value">{{power.label}}</option>
+              </select>
+            </label>
+            <span *ngIf="getFormC('eroeInfo.power')?.invalid && getFormC('eroeInfo.power')?.touched">
+              <ng-container *ngIf="getErrorsC('eroeInfo.power', 'required')">
+                campo obbligatorio
+              </ng-container>
+            </span>
+        </div>
+
+        <div  class="form-group my-3">
+          <label class="w-100">
+            nemico eroe
+            <input type="text" formControlName="enemy" class="w-100"
+            id="enemy" />
+          </label>
+          <span *ngIf="getFormC('eroeInfo.enemy')?.invalid && getFormC('eroeInfo.enemy')?.touched">
+            <ng-container *ngIf="getErrorsC('eroeInfo.enemy', 'required')">
+              campo obbligatorio
+            </ng-container>
+            <ng-container *ngIf="getErrorsC('eroeInfo.enemy', 'maxlength')">
+              massimo 10 caratteri
+            </ng-container>
+          </span>
+      </div>
+
+      <div  class="form-group my-3">
+        <label class="w-100">
+          pianeta eroe
+          <input type="text" formControlName="planet" class="w-100"
+          id="planet" />
+        </label>
+        <span *ngIf="getFormC('eroeInfo.planet')?.invalid && getFormC('eroeInfo.planet')?.touched">
+          <ng-container *ngIf="getErrorsC('eroeInfo.planet', 'required')">
+            campo obbligatorio
+          </ng-container>
+          <ng-container *ngIf="getErrorsC('eroeInfo.planet', 'minlength')">
+            minimo 5 caratteri
+          </ng-container>
+        </span>
+    </div>
+
+    <div  class="form-group my-3">
+      <label class="w-100">
+        Debolezza eroe
+        <input type="text" formControlName="weakness" class="w-100" ngModel
+        id="weakness"/>
+      </label>
+    </div>
+  </div>
+<button class="btn btn-success" (click)="submitReactiveForm()"
+[disabled]="contenitoreForm.invalid">Crea</button>
         </form>
       </div>
     </div>

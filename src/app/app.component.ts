@@ -63,7 +63,7 @@ export class AppComponent implements OnInit{
     if(String(formC.value).length > 10){
       return { 'enemyLong' : true};
     }else{
-      return null;
+      return { 'enemyLong' : false};
     }
   }
 
@@ -74,13 +74,15 @@ export class AppComponent implements OnInit{
     });
 
     this.contenitoreForm = this.fb.group({
-      name: this.fb.control(null, [Validators.required]),
-      alterEgo: this.fb.control(null, [Validators.required]),
-      power: this.fb.control(null, [Validators.required]),
-      enemy: this.fb.control(null, [Validators.required, this.validEnemy]),
-      planet: this.fb.control(null, [Validators.required, this.validPlanet]),
-      weakness: this.fb.control(null, [])
+      eroeInfo: this.fb.group({
+      name: [null, [Validators.required]],
+      alterEgo: [null, [Validators.required]],
+      power: [null, [Validators.required]],
+      enemy: [null, [Validators.required, Validators.maxLength(10)]],
+      planet: [null, [Validators.required, Validators.minLength(5)]],
+      weakness: [null, []]
     })
+  });
   }
 
   getFormC(nome:string){
@@ -100,5 +102,28 @@ export class AppComponent implements OnInit{
     this.eroe.planet = this.form.value.eroeInfo.planet;
     console.table(this.eroe);
     this.form.reset();
+  }
+
+  submitReactiveForm():void{
+    this.eroe.name = this.contenitoreForm.value.eroeInfo.name;
+    this.eroe.alterEgo = this.contenitoreForm.value.eroeInfo.alterEgo;
+    this.eroe.power = this.contenitoreForm.value.eroeInfo.power;
+    this.eroe.enemy = this.contenitoreForm.value.eroeInfo.enemy;
+    this.eroe.weakness = this.contenitoreForm.value.eroeInfo.weakness;
+    this.eroe.planet = this.contenitoreForm.value.eroeInfo.planet;
+    console.table(this.eroe);
+    this.contenitoreForm.reset();
+    this.resetEroe();
+  }
+
+  resetEroe(){
+    this.eroe = {
+      name: '',
+      alterEgo: '',
+      power: '',
+      enemy: '',
+      planet: '',
+      weakness: ''
+    };
   }
 }
